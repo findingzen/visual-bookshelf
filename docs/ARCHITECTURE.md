@@ -257,7 +257,7 @@ Detailed in Sprint 2. Principles:
 - Source code lives inside the WSL filesystem for file-watch speed.
 - **No collisions with other projects:**
   - fixed compose project name (`name: happy-bookshelf`), so containers, networks and volumes are prefixed;
-  - non-default host ports (for example `8740` for HTTPS, Postgres not published at all);
+  - non-default host ports: `8443` for HTTPS and `8081` for HTTP (set in `.env`), Postgres not published at all;
   - a per-repo SSH host alias (Sprint 1) so this repo's Git identity never touches other projects' keys.
 
 ---
