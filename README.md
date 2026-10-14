@@ -87,6 +87,27 @@ Barcode scanning will use the phone's camera, which requires trusted HTTPS. To r
 
 If your router assigns a new IP, repeat step 1. A DHCP reservation on the router keeps the IP fixed.
 
+### 4. Local Python tooling
+
+The app runs in its container, but formatting runs on your machine. Install [uv](https://docs.astral.sh/uv/), then:
+
+```bash
+cd app
+uv sync
+```
+
+This creates `app/.venv` with the dev tools, including [ruff](https://docs.astral.sh/ruff/). Format with `uv run ruff format`.
+
+### 5. Working with an AI agent (optional)
+
+Agent instructions live in [`AGENTS.md`](AGENTS.md). Claude Code also reads [`CLAUDE.md`](CLAUDE.md) and the project settings in `.claude/`:
+
+- `/sprint-start` and `/sprint-close` begin and end a work session against the sprint docs.
+- An edit hook rejects files with CRLF line endings and runs ruff on Python files after every change. It needs `bash`, `python3` and the `app/.venv` from step 4.
+- Permissions keep the agent away from `.env` and private keys.
+
+On Windows, run the agent inside WSL, not against `\\wsl.localhost` from Windows.
+
 ## Documentation
 
 | Document | Contents |

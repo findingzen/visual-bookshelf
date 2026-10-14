@@ -254,6 +254,7 @@ Built and verified in Sprint 2; the settled facts are in [`docs/DESIGN.md`](DESI
 - Rootless Podman inside the WSL Ubuntu distribution, sharing nothing with the Docker Desktop that other projects use ([ADR 0006](adr/0006-podman-in-wsl.md)); all images `linux/arm64`.
 - One `compose.yaml` that runs under both `podman compose` and `docker compose`, since most contributors use Docker.
 - Editors and Claude Code run inside WSL (VS Code's WSL remote), so Git, `uv` and Podman are the WSL ones and files are saved with LF endings.
+- Agent edits are checked as they are written: a Claude Code hook rejects CRLF files and formats Python with Ruff ([ADR 0011](adr/0011-ruff-and-edit-time-checks.md)). The agent setup is settled in [`docs/DESIGN.md`](DESIGN.md#ai-agent-setup).
 - Source code lives inside the WSL filesystem for file-watch speed.
 - **No collisions with other projects:**
   - fixed compose project name (`name: visual-bookshelf`), so containers, networks and volumes are prefixed;
@@ -336,5 +337,6 @@ The prototype covers one IKEA Billy shelf. A spine that is not flush reads narro
 | D-9 | CSS method | Tailwind · component framework · classless · CUBE CSS with tokens | ✅ Tokens, CUBE CSS, editorial type scale ([ADR 0008](adr/0008-design-first-tokens-and-cube.md)) |
 | D-10 | Typefaces | Fraunces · EB Garamond · others | Decide in Sprint 4 |
 | D-11 | Documentation style | — | ✅ Settled-design file `docs/DESIGN.md` beside this proposal ([ADR 0009](adr/0009-settled-design-file.md)) |
+| D-12 | Python formatter and line-ending checks | Black · Ruff · none yet | ✅ Ruff, run with LF checks by a Claude Code edit hook ([ADR 0011](adr/0011-ruff-and-edit-time-checks.md)); decided in Sprint 3 |
 
 Decisions, once made, are recorded as ADRs in `docs/adr/`.
