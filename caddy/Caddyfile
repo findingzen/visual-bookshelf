@@ -1,0 +1,16 @@
+{
+	http_port {$VB_HTTP_PORT}
+	https_port {$VB_HTTPS_PORT}
+}
+
+# Caddy's internal CA issues the certificate. Phones must trust its root
+# certificate once (see docs/DESIGN.md).
+{$VB_SITE_HOST} {
+	tls internal
+	reverse_proxy web:8000
+}
+
+# Caddy's automatic redirect assumes port 443; keep the real HTTPS port.
+http://{$VB_SITE_HOST}:{$VB_HTTP_PORT} {
+	redir https://{host}:{$VB_HTTPS_PORT}{uri} permanent
+}
