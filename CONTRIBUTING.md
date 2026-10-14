@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for looking. visual-bookshelf is in Phase 0: the design is written down and no application code exists yet, so the most useful contributions right now are comments on the design.
+Thank you for looking. visual-bookshelf is in Phase 0: the design is written down and a development stack runs, but there are no features yet. The most useful contributions right now are comments on the design.
 
 ## Where to start
 
@@ -17,8 +17,9 @@ Open an issue if something in the design looks wrong, or if you know a free sour
 - **Line endings** are LF, enforced by `.gitattributes`.
 - **Secrets** never go in the repository. Configuration belongs in `.env`, documented in `.env.example`.
 - **Decisions** are recorded as an ADR in `docs/adr/`, in the same pull request as the change.
+- **Setup changes** update the README's [Development setup](README.md#development-setup) in the same pull request. If a step didn't work for you, fixing the README is a welcome contribution.
 - **Licenses:** code is MIT. Book data contributed to the shared catalog is CC0. By contributing you agree to both.
 
-Setup instructions, tests and `good first issue`s arrive with Phase 1, when there is something to run.
+To run the development stack, follow [Development setup](README.md#development-setup). Tests and `good first issue`s arrive with Phase 1.
 
 AI coding agents read [`AGENTS.md`](AGENTS.md) instead.

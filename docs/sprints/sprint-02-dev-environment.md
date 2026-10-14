@@ -51,4 +51,5 @@ No conflicts. Ports 8443 and 8081 are free.
 
 - The LAN IP (`192.168.4.178`) comes from DHCP. If it changes, update `.env` and restart `caddy` and `web`; a DHCP reservation on the router would prevent this.
 - Run the stack under Docker once, as ADR 0006 asks; CI will do it from Sprint 8.
-- The README still says "Nothing runs yet." Its quick start arrives in Phase 1.
+- The README now has a Development setup section, so a fresh clone can follow these steps. The one-command install for users arrives in Phase 1.
+- The Android steps in the README haven't been tested yet.

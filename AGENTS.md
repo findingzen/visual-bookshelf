@@ -34,6 +34,7 @@ These rules come from the project owner and apply to every session.
 3. **Explain why.** Unless the reason is obvious, give each step a one-line reason. Knowing what a step is for helps the owner troubleshoot when something goes wrong.
 4. **Skip obvious verification.** The owner handles routine checks (does it print the expected greeting, did the push succeed). Don't ask for their output; the owner will report problems.
 5. **Docs are part of the work.** At the end of every planning session and every sprint, update `docs/ARCHITECTURE.md`, add or update ADRs in `docs/adr/`, and write the sprint log in `docs/sprints/`. A sprint isn't done until its docs are.
+   **Setup docs stay current.** The README's *Development setup* is the procedure a new contributor follows after cloning. Whenever a setup or development step is added, changed, or improved (including fixes found while troubleshooting), update that section, `.env.example` and `docs/DESIGN.md` in the same commit. Steps that only apply to the owner's machine (the IP, the `rc` script) go in the sprint log, not the README.
 6. **Decisions get recorded.** When a choice is made, update the *Open decisions* table in `docs/ARCHITECTURE.md` and write an ADR.
 7. **Design matters.** This app is for lovers of books and art. UI work should be deliberate, typographic and warm, never default-looking.
 

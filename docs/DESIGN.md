@@ -32,12 +32,5 @@ What is built and verified, stated as fact. Reasoning lives in [`docs/adr/`](adr
 - Caddy serves `VB_SITE_HOST` only, with a certificate from its internal CA (`tls internal`, `caddy/Caddyfile`).
 - `default_sni` is set to `VB_SITE_HOST`, because browsers send no SNI to an IP address.
 - Plain HTTP on `VB_HTTP_PORT` redirects to HTTPS on `VB_HTTPS_PORT`, except `/root.crt`, which serves the internal CA's public root certificate as `application/x-x509-ca-cert`. The private key is never served.
-- **Phone access** needs four things:
-  1. `.env`: `VB_BIND_ADDRESS=0.0.0.0`; `VB_SITE_HOST` set to the PC's LAN IP; that IP added to `DJANGO_ALLOWED_HOSTS` and, as `https://<ip>:8443`, to `DJANGO_CSRF_TRUSTED_ORIGINS`.
-  2. A Hyper-V firewall rule opening TCP 8443 and 8081 to WSL, created once from an Administrator PowerShell:
-     ```powershell
-     New-NetFirewallHyperVRule -Name "visual-bookshelf-dev" -DisplayName "visual-bookshelf dev (8443, 8081)" -Direction Inbound -VMCreatorId '{40E0AC32-46A5-438A-A0B2-2B479E8F2E90}' -Protocol TCP -LocalPorts 8443,8081
-     ```
-  3. The phone trusts the CA once. On iPhone: open `http://<ip>:8081/root.crt` **in Safari**, install the profile in Settings, then enable it under *General → About → Certificate Trust Settings*.
-  4. The phone opens `https://<ip>:8443`.
+- Phones reach the stack over the LAN: `VB_BIND_ADDRESS=0.0.0.0`, `VB_SITE_HOST` set to the LAN IP, a Hyper-V firewall rule for TCP 8443 and 8081 on Windows, and the CA trusted on the phone. Verified on iPhone. The step-by-step procedure is in the [README](../README.md#development-setup).
 - With a LAN IP as `VB_SITE_HOST`, `https://localhost:8443` does not answer; the PC uses the IP too.
