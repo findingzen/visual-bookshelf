@@ -1,6 +1,9 @@
 {
 	http_port {$VB_HTTP_PORT}
 	https_port {$VB_HTTPS_PORT}
+	# Browsers send no SNI when the site host is an IP address (phone testing
+	# over the LAN); without this, Caddy cannot pick a certificate.
+	default_sni {$VB_SITE_HOST}
 }
 
 # Caddy's internal CA issues the certificate. Phones must trust its root
@@ -12,5 +15,14 @@
 
 # Caddy's automatic redirect assumes port 443; keep the real HTTPS port.
 http://{$VB_SITE_HOST}:{$VB_HTTP_PORT} {
-	redir https://{host}:{$VB_HTTPS_PORT}{uri} permanent
+	# Development only: hand out the internal CA's public root certificate so
+	# a phone can trust it. Only this one file is served, never the key.
+	handle /root.crt {
+		root * /data/caddy/pki/authorities/local
+		header Content-Type application/x-x509-ca-cert
+		file_server
+	}
+	handle {
+		redir https://{host}:{$VB_HTTPS_PORT}{uri} permanent
+	}
 }

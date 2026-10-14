@@ -249,7 +249,7 @@ The design direction is set in Sprint 4, before the shelf prototype, so the prot
 
 ## 11. Development environment (Windows on Arm)
 
-Detailed in Sprint 2. Principles:
+Built and verified in Sprint 2; the settled facts are in [`docs/DESIGN.md`](DESIGN.md#development-environment). Principles:
 
 - Rootless Podman inside the WSL Ubuntu distribution, sharing nothing with the Docker Desktop that other projects use ([ADR 0006](adr/0006-podman-in-wsl.md)); all images `linux/arm64`.
 - One `compose.yaml` that runs under both `podman compose` and `docker compose`, since most contributors use Docker.
@@ -331,7 +331,7 @@ The prototype covers one IKEA Billy shelf. A spine that is not flush reads narro
 | D-4 | Task queue | Django-Q2 (ORM) · Celery + Redis | Django-Q2: one fewer container |
 | D-5 | Shelf renderer | SVG · Canvas (PixiJS) | SVG first |
 | D-6 | OCR engine | Tesseract · PaddleOCR | Benchmark in Phase 3 |
-| D-7 | Container runtime for development | Docker Desktop · Podman in WSL | ✅ Podman in WSL, compose file compatible with both ([ADR 0006](adr/0006-podman-in-wsl.md)); verified in Sprint 2 |
+| D-7 | Container runtime for development | Docker Desktop · Podman in WSL | ✅ Podman in WSL, compose file compatible with both ([ADR 0006](adr/0006-podman-in-wsl.md)); verified on arm64 in Sprint 2 |
 | D-8 | How books are measured | Rulers on shelf edges · photos calibrated by the shelf opening | ✅ Shelf-calibrated photos, three views, reconciled ([ADR 0007](adr/0007-shelf-calibrated-measuring.md)) |
 | D-9 | CSS method | Tailwind · component framework · classless · CUBE CSS with tokens | ✅ Tokens, CUBE CSS, editorial type scale ([ADR 0008](adr/0008-design-first-tokens-and-cube.md)) |
 | D-10 | Typefaces | Fraunces · EB Garamond · others | Decide in Sprint 4 |

@@ -1,6 +1,6 @@
 # 0006 — Podman in WSL for development
 
-**Status:** Accepted · **Date:** 2026-10-13 · To be verified in Sprint 2
+**Status:** Accepted · **Date:** 2026-10-13 · Verified on arm64 in Sprint 2
 
 ## Context
 
