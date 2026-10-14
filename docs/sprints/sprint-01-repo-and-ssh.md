@@ -4,6 +4,8 @@
 **Status:** ✅ Done
 **Goal:** create `happy-bookshelf` on GitHub and locally, without disturbing the SSH or Git setup of other projects on the same machine.
 
+> The project was renamed to `visual-bookshelf` in Sprint 2 ([ADR 0010](../adr/0010-rename-to-visual-bookshelf.md)). Names below are as they were at the time.
+
 ## What was done
 
 | Step | Where | Result |

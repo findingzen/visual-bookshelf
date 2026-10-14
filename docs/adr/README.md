@@ -13,5 +13,6 @@ Each significant decision gets a short record: the context, the decision, and it
 | [0007](0007-shelf-calibrated-measuring.md) | Measure books from photos calibrated by the shelf | Accepted | 2026-10-13 |
 | [0008](0008-design-first-tokens-and-cube.md) | Design direction before the prototype; tokens, CUBE CSS and an editorial type scale | Accepted | 2026-10-13 |
 | [0009](0009-settled-design-file.md) | A settled-design file alongside the architecture proposal | Accepted | 2026-10-13 |
+| [0010](0010-rename-to-visual-bookshelf.md) | Rename the project to visual-bookshelf | Accepted | 2026-10-14 |
 
 New records copy the structure of 0001: **Context**, **Decision**, **Consequences**.

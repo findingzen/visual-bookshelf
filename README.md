@@ -1,4 +1,4 @@
-# happy-bookshelf
+# visual-bookshelf
 
 > A home-library catalogue for people who love books as objects.
 > Scan, catalogue and arrange your shelves — then see how they could look.

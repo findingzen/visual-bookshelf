@@ -1,7 +1,7 @@
 # Architecture
 
 > **Status:** Proposal — Planning Session 0 (2026-10-13), revised in Planning Session 1 (2026-10-13)
-> **Name:** `happy-bookshelf`
+> **Name:** `visual-bookshelf`
 
 This document explains how the app is put together and why. It is updated at the end of every planning session and sprint. Decisions that are still open are marked **🟡 Open**.
 
@@ -40,7 +40,7 @@ flowchart LR
     SW["Service worker\n+ IndexedDB offline queue"]
   end
 
-  subgraph Compose["compose stack (project: happy-bookshelf)"]
+  subgraph Compose["compose stack (project: visual-bookshelf)"]
     Caddy["caddy\nHTTPS, static, media"]
     Web["web\nDjango + gunicorn"]
     Worker["worker\nDjango-Q2 (ORM broker)"]
@@ -71,7 +71,7 @@ flowchart LR
 | `caddy` | `caddy:2` | TLS termination, static + media files | Required: browsers only allow camera access over HTTPS (or `localhost`). Caddy's internal CA covers LAN use; Tailscale certs cover remote use |
 | `web` | `python:3.13-slim` | Django app, HTML + JSON API | Dependencies managed with `uv` |
 | `worker` | same image as `web` | Background jobs: metadata lookup, cover download, colour extraction | Django-Q2 using Postgres as its broker, so **no Redis container** |
-| `db` | `postgres:16` | All persistent data | Named volume `happy-bookshelf_pgdata` |
+| `db` | `postgres:16` | All persistent data | Named volume `visual-bookshelf_pgdata` |
 | `ml` | `python:3.13-slim` + OCR libs | Cover/spine recognition | Compose **profile** — off by default, so the base install stays light |
 
 All base images are published for `linux/arm64`, which matters for the Windows-on-Arm dev machine and for a Raspberry Pi later.
@@ -256,7 +256,7 @@ Detailed in Sprint 2. Principles:
 - Editors and Claude Code run inside WSL (VS Code's WSL remote), so Git, `uv` and Podman are the WSL ones and files are saved with LF endings.
 - Source code lives inside the WSL filesystem for file-watch speed.
 - **No collisions with other projects:**
-  - fixed compose project name (`name: happy-bookshelf`), so containers, networks and volumes are prefixed;
+  - fixed compose project name (`name: visual-bookshelf`), so containers, networks and volumes are prefixed;
   - non-default host ports: `8443` for HTTPS and `8081` for HTTP (set in `.env`), Postgres not published at all;
   - a per-repo SSH host alias (Sprint 1) so this repo's Git identity never touches other projects' keys.
 
@@ -325,7 +325,7 @@ The prototype covers one IKEA Billy shelf. A spine that is not flush reads narro
 
 | ID | Question | Options | Leaning |
 |---|---|---|---|
-| D-1 | Project name | — | ✅ `happy-bookshelf` |
+| D-1 | Project name | `happy-bookshelf` · `visual-bookshelf` | ✅ `visual-bookshelf`, renamed in Sprint 2 ([ADR 0010](adr/0010-rename-to-visual-bookshelf.md)) |
 | D-2 | Code licence | AGPL-3.0 (forks that host it must share changes) · MIT (maximum adoption) | ✅ MIT, chosen for visibility and low friction for contributors and adopters |
 | D-3 | Data licence for Commons | CC0 | CC0, to stay compatible with Open Library |
 | D-4 | Task queue | Django-Q2 (ORM) · Celery + Redis | Django-Q2: one fewer container |

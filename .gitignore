@@ -5,8 +5,8 @@
 *.pem
 *.key
 id_*
-/happy-bookshelf
-/happy-bookshelf.pub
+/visual-bookshelf
+/visual-bookshelf.pub
 
 # ── AI agent local files ──────────────────────────────────
 CLAUDE.local.md

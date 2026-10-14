@@ -4,7 +4,7 @@
 
 ## Context
 
-happy-bookshelf is open source and built across many short sprints, partly with AI coding agents that start each session without memory. Contributors and agents need to know not only what was decided, but why.
+visual-bookshelf is open source and built across many short sprints, partly with AI coding agents that start each session without memory. Contributors and agents need to know not only what was decided, but why.
 
 ## Decision
 

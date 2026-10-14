@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for looking. happy-bookshelf is in Phase 0: the design is written down and no application code exists yet, so the most useful contributions right now are comments on the design.
+Thank you for looking. visual-bookshelf is in Phase 0: the design is written down and no application code exists yet, so the most useful contributions right now are comments on the design.
 
 ## Where to start
 

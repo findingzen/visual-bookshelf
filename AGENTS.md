@@ -1,11 +1,11 @@
 # AGENTS.md
 
-Instructions for AI coding agents (Claude Code and others) working on **happy-bookshelf**.
+Instructions for AI coding agents (Claude Code and others) working on **visual-bookshelf**.
 Humans are welcome to read this too; contributor guidance for people lives in `CONTRIBUTING.md`.
 
 ## Project in one paragraph
 
-happy-bookshelf is an open-source, self-hosted home-library catalogue, delivered as a PWA. Books are identified by ISBN barcode (later by cover and spine), catalogued with metadata from free open sources, and placed on virtual shelves with real physical dimensions so different arrangements can be previewed. Read `docs/ARCHITECTURE.md` before making structural changes.
+visual-bookshelf is an open-source, self-hosted home-library catalogue, delivered as a PWA. Books are identified by ISBN barcode (later by cover and spine), catalogued with metadata from free open sources, and placed on virtual shelves with real physical dimensions so different arrangements can be previewed. Read `docs/ARCHITECTURE.md` before making structural changes.
 
 ## Starting a session
 
@@ -47,10 +47,10 @@ These rules come from the project owner and apply to every session.
 ## Local environment
 
 - Development machine: Windows on Arm, working inside **WSL**.
-- Code lives in the WSL filesystem (`~/projects/happy-bookshelf`), **never** under `/mnt/c`.
-- The Git remote uses the SSH alias `github-happy-bookshelf` (key `~/.ssh/happy-bookshelf`, GitHub account `findingzen`). Do not change the remote to plain `github.com`.
+- Code lives in the WSL filesystem (`~/projects/visual-bookshelf`), **never** under `/mnt/c`.
+- The Git remote uses the SSH alias `github-visual-bookshelf` (key `~/.ssh/visual-bookshelf`, GitHub account `findingzen`). Do not change the remote to plain `github.com`.
 - Git identity is set **locally** in this repo. Do not create or edit a global `~/.gitconfig`; other projects on this machine use different GitHub accounts.
-- Avoid collisions with other local projects: compose project name `happy-bookshelf`, non-default host ports, Postgres not published to the host.
+- Avoid collisions with other local projects: compose project name `visual-bookshelf`, non-default host ports, Postgres not published to the host.
 
 ## External services
 
