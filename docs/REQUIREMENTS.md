@@ -14,7 +14,7 @@ The owner's original brief from Planning Session 0 (2026-10-13), lightly edited 
 8. **Django backend with a non-React frontend.** Open to changing this for good reasons.
 9. **Physical location tracking** that doesn't depend on the real room layout. Total shelf space is treated as one linear run; the app suggests organisations and sortings, and virtually fills shelves using each book's width and position. Every book is a visual, movable object with physical dimensions and a spine that resembles the real one (standardised spines first, variation later). This shows both the collection as it is and how different groupings would look.
 10. **Documentation-first open source.** Docs and READMEs are updated at the end of every planning session and sprint.
-11. **Match the owner's documentation style** from the docgen project. *(Pending: owner to share docgen docs.)*
+11. **Match the owner's documentation style** from the docgen project. *(Sample shared 2026-10-13: docgen's "Settled Design" file.)*
 12. **Beautiful UI,** suited to lovers of art and books.
 
 ## Process
@@ -29,3 +29,10 @@ The owner's original brief from Planning Session 0 (2026-10-13), lightly edited 
 - **Measuring with rulers:** rulers fixed to shelf edges give a photo scale; spine widths come from coordinate distances.
 - **Open-source readiness:** showcase GIF or demo, two-minute quick start, ADRs, contributor on-ramp, visible design quality.
 - **Ownership:** the project lives under the `findingzen` GitHub account.
+
+## Changed during Session 1 (2026-10-13)
+
+- **Prototype scope:** one IKEA Billy shelf and the books on it, replacing "~50 real books".
+- **Measuring:** no measuring books by hand and no rulers. Photos from the left, middle and right of the shelf, calibrated by the shelf's known dimensions, with a method that corrects itself.
+- **Design is a forethought:** the design direction is set before the prototype is drawn. Tailwind is too sterile for this project.
+- **Podman** is preferred over Docker Desktop for development.

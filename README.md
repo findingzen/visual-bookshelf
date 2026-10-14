@@ -44,9 +44,9 @@ Runs on `linux/amd64` and `linux/arm64` (including Windows on Arm and Raspberry 
 | Document | Contents |
 |---|---|
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | How the system fits together and why |
-| `docs/adr/` | Architecture decision records *(Phase 0)* |
-| `docs/sprints/` | Sprint plans and retrospectives *(Phase 0)* |
-| `CONTRIBUTING.md` | How to contribute *(Phase 0)* |
+| [`docs/adr/`](docs/adr/) | Architecture decision records |
+| [`docs/sprints/`](docs/sprints/) | Sprint plans and retrospectives |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to contribute |
 | `CHANGELOG.md` | Release history *(Phase 1)* |
 
 ## Data sources and thanks

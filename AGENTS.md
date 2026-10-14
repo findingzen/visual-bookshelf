@@ -15,13 +15,14 @@ Read these first, in this order:
 2. The latest sprint log in `docs/sprints/`.
 3. `docs/REQUIREMENTS.md` — the owner's original brief.
 4. `docs/ARCHITECTURE.md` and `docs/adr/` — the design and the reasoning behind it.
+5. `docs/DESIGN.md`, once it exists (Sprint 2) — what is built and settled. Do not reopen a settled decision without implementation evidence of a blocker.
 
 ## Stack
 
 - Backend: Django, PostgreSQL, Django-Q2 (Postgres as broker, no Redis)
 - Frontend: Django templates + HTMX + Alpine.js; Lit web components only for the shelf wall and scanner. **No React.**
-- Styling: plain CSS with custom properties (design tokens). No utility framework.
-- Runtime: Docker Compose, Caddy for HTTPS. All images must support `linux/arm64`.
+- Styling: plain CSS with custom properties (design tokens), organised as CUBE CSS. No utility framework.
+- Runtime: a compose stack with Caddy for HTTPS. Development uses rootless Podman in WSL; `compose.yaml` must also run under Docker. All images must support `linux/arm64`.
 - Python dependencies: `uv`
 
 ## Working style

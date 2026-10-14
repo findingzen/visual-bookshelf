@@ -1,9 +1,11 @@
 # Architecture
 
-> **Status:** Proposal — Planning Session 0 (2026-10-13)
+> **Status:** Proposal — Planning Session 0 (2026-10-13), revised in Planning Session 1 (2026-10-13)
 > **Name:** `happy-bookshelf`
 
 This document explains how the app is put together and why. It is updated at the end of every planning session and sprint. Decisions that are still open are marked **🟡 Open**.
+
+It is a proposal. What has been built and verified is stated in `docs/DESIGN.md` (created in Sprint 2; see [ADR 0009](adr/0009-settled-design-file.md)).
 
 ---
 
@@ -38,7 +40,7 @@ flowchart LR
     SW["Service worker\n+ IndexedDB offline queue"]
   end
 
-  subgraph Compose["docker compose (project: happy-bookshelf)"]
+  subgraph Compose["compose stack (project: happy-bookshelf)"]
     Caddy["caddy\nHTTPS, static, media"]
     Web["web\nDjango + gunicorn"]
     Worker["worker\nDjango-Q2 (ORM broker)"]
@@ -216,7 +218,7 @@ Strategies are plain Python classes in `catalog/arrangements/`, so contributors 
 | Page interactions | HTMX |
 | Small client state (menus, toggles) | Alpine.js |
 | Shelf wall, scanner | Lit web components |
-| Styling | Plain CSS with custom properties (design tokens), no utility framework |
+| Styling | Plain CSS with custom properties (design tokens), organised as CUBE CSS, with an editorial type scale; no utility framework ([ADR 0008](adr/0008-design-first-tokens-and-cube.md)) |
 | Build | None for most pages; `esbuild` only for the web components |
 | PWA | Web app manifest + Workbox service worker |
 
@@ -229,7 +231,7 @@ For people who love books and art:
 - **Texture and motion:** subtle paper grain, gentle page-turn and slide transitions, honouring `prefers-reduced-motion`.
 - **Covers are the art:** generous whitespace, covers shown large, chrome kept quiet.
 
-A design-system page (`/styleguide`) documents tokens and components from the first UI sprint.
+The design direction is set in Sprint 4, before the shelf prototype, so the prototype and its showcase are built on the real palette and type. Sprint 4 produces a static styleguide page; it becomes `/styleguide` in the Django app in Sprint 8.
 
 ---
 
@@ -249,7 +251,9 @@ A design-system page (`/styleguide`) documents tokens and components from the fi
 
 Detailed in Sprint 2. Principles:
 
-- Docker Desktop for Windows on Arm with the WSL 2 backend; all images `linux/arm64`.
+- Rootless Podman inside the WSL Ubuntu distribution, sharing nothing with the Docker Desktop that other projects use ([ADR 0006](adr/0006-podman-in-wsl.md)); all images `linux/arm64`.
+- One `compose.yaml` that runs under both `podman compose` and `docker compose`, since most contributors use Docker.
+- Editors and Claude Code run inside WSL (VS Code's WSL remote), so Git, `uv` and Podman are the WSL ones and files are saved with LF endings.
 - Source code lives inside the WSL filesystem for file-watch speed.
 - **No collisions with other projects:**
   - fixed compose project name (`name: happy-bookshelf`), so containers, networks and volumes are prefixed;
@@ -260,7 +264,7 @@ Detailed in Sprint 2. Principles:
 
 ## 12. Deployment path
 
-1. **Local** — Windows-on-Arm laptop, `docker compose up`.
+1. **Local** — Windows-on-Arm laptop, `podman compose up` (or `docker compose up`).
 2. **Home server** — same compose file on an always-on machine; remote access over Tailscale.
 3. **Public demo** — behind a small VPS / reverse proxy, read-only demo library.
 
@@ -270,7 +274,7 @@ Detailed in Sprint 2. Principles:
 
 | Phase | Theme | Key deliverables |
 |---|---|---|
-| 0 | Foundations | Repo, SSH isolation, arm64 dev env, Claude Code setup, docs skeleton |
+| 0 | Foundations | Repo, SSH isolation, arm64 dev env, Claude Code setup, docs skeleton, design direction, shelf prototype |
 | 1 | Catalogue | Django skeleton, compose stack, ISBN scan, lookup chain, Copy CRUD, Gallery/Ledger views, PWA install |
 | 2 | Shelves | Bookcase/shelf model, linear run, arrangement engine, `<shelf-wall>`, backups |
 | 3 | Recognition | Spine OCR, cover matching, scan station, Commons contributions |
@@ -281,9 +285,14 @@ Detailed in Sprint 2. Principles:
 | Sprint | Goal |
 |---|---|
 | 1 | Create the repo on GitHub and locally; isolate its SSH identity from other projects |
-| 2 | Decide and set up the arm64 Windows dev architecture without conflicting with existing projects |
+| 2 | Set up the arm64 Windows dev environment on Podman in WSL without conflicting with existing projects |
 | 3 | Set up and tune Claude Code for this project (CLAUDE.md, permissions, commands, hooks) |
-| 4 | **Shelf prototype (moved up):** throwaway virtual shelf with ~50 real books; validate that arranging spines is genuinely useful before building Commons or recognition |
+| 4 | **Design direction:** palette, typefaces, type and space scales as tokens; static styleguide page |
+| 5 | **Shelf prototype, data:** the books on one IKEA Billy shelf, fetched by ISBN from Open Library |
+| 6 | **Shelf prototype, measuring:** thickness and height from three shelf-calibrated photos |
+| 7 | **Shelf prototype, shelf:** throwaway SVG shelf to scale with orderings and drag; validate that arranging spines is genuinely useful before building Commons or recognition |
+
+Phase 1 is Sprints 8–13. The full plan, with what each sprint must deliver, is in [`docs/sprints/README.md`](sprints/README.md).
 
 ### Open-source readiness (added in Session 0)
 
@@ -291,15 +300,24 @@ These run alongside the phases rather than waiting for Phase 4. Each one has an 
 
 | Item | Target | First appears |
 |---|---|---|
-| **Showcase:** a striking GIF or live demo page of the virtual shelf near the top of the README | Visitors understand the idea in five seconds | GIF from the Sprint 4 shelf prototype; live demo page in Phase 4 |
+| **Showcase:** a striking GIF or live demo page of the virtual shelf near the top of the README | Visitors understand the idea in five seconds | GIF from the Sprint 7 shelf prototype; live demo page in Phase 4 |
 | **Two-minute quick start** that actually works | `git clone` → `docker compose up` → working app, tested on a clean machine for every release | Phase 1 |
 | **Architecture docs and decision records** | `docs/ARCHITECTURE.md` updated every session; one ADR per decision in `docs/adr/` | Phase 0 (now) |
 | **Contributor on-ramp:** friendly `CONTRIBUTING.md`, issue templates, labelled `good first issue`s | At least five well-scoped first issues at any time | `CONTRIBUTING.md` in Phase 0; first issues in Phase 1 |
-| **Visibly thoughtful design:** design system, `/styleguide` page, screenshots in the README | The design is the project's calling card | Tokens and styleguide in the first UI sprint; screenshots from Phase 1 |
+| **Visibly thoughtful design:** design system, `/styleguide` page, screenshots in the README | The design is the project's calling card | Tokens and styleguide in Sprint 4; screenshots from Phase 1 |
 
-### Measuring books (decided in Session 0)
+### Measuring books (decided in Session 0, revised in Session 1)
 
-Rulers fixed along the shelf edges serve as a scale reference. A photo of the shelf is taken, the ruler gives millimetres-per-pixel, and spine edges marked (by hand first, automatically later) are converted to widths by coordinate distance. Perspective correction is needed if the photo isn't square to the shelf; printed fiducial markers (for example ArUco) at the ruler ends are a candidate for making this robust.
+The shelf opening is the scale reference; rulers and fiducial markers are not used ([ADR 0007](adr/0007-shelf-calibrated-measuring.md)).
+
+1. The shelf opening's inner width and height are tape-measured once.
+2. Spines are pushed flush with the shelf's front edge, so they lie in the plane of the opening.
+3. Three photos are taken: from the left, the middle and the right.
+4. The four inner corners marked in each photo give a homography from pixels to millimetres, which removes perspective for any camera angle.
+5. Spine boundaries marked on the rectified photo (by hand first, automatically later) give each book's thickness and height.
+6. Two corrections: the median of the three measurements is used and disagreement is flagged; and the thicknesses must add up to the tape-measured occupied run, with the residual spread in proportion to thickness.
+
+The prototype covers one IKEA Billy shelf. A spine that is not flush reads narrow and shifts sideways in off-centre photos; solving for each book's recess from two views is the fallback.
 
 ---
 
@@ -313,5 +331,10 @@ Rulers fixed along the shelf edges serve as a scale reference. A photo of the sh
 | D-4 | Task queue | Django-Q2 (ORM) · Celery + Redis | Django-Q2: one fewer container |
 | D-5 | Shelf renderer | SVG · Canvas (PixiJS) | SVG first |
 | D-6 | OCR engine | Tesseract · PaddleOCR | Benchmark in Phase 3 |
+| D-7 | Container runtime for development | Docker Desktop · Podman in WSL | ✅ Podman in WSL, compose file compatible with both ([ADR 0006](adr/0006-podman-in-wsl.md)); verified in Sprint 2 |
+| D-8 | How books are measured | Rulers on shelf edges · photos calibrated by the shelf opening | ✅ Shelf-calibrated photos, three views, reconciled ([ADR 0007](adr/0007-shelf-calibrated-measuring.md)) |
+| D-9 | CSS method | Tailwind · component framework · classless · CUBE CSS with tokens | ✅ Tokens, CUBE CSS, editorial type scale ([ADR 0008](adr/0008-design-first-tokens-and-cube.md)) |
+| D-10 | Typefaces | Fraunces · EB Garamond · others | Decide in Sprint 4 |
+| D-11 | Documentation style | — | ✅ Settled-design file `docs/DESIGN.md` beside this proposal ([ADR 0009](adr/0009-settled-design-file.md)) |
 
 Decisions, once made, are recorded as ADRs in `docs/adr/`.
