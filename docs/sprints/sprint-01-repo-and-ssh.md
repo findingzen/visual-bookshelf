@@ -13,7 +13,7 @@
 | 3 | Browser | Created public repo `findingzen/happy-bookshelf` with the MIT licence, no generated README |
 | 4 | Browser | Added the public key to the `findingzen` account |
 | 5 | WSL terminal | Added SSH host alias `github-happy-bookshelf` with `IdentitiesOnly yes` (config backed up first) |
-| 6 | WSL terminal | Cloned to `~/zendev_wsl/happy-bookshelf` via the alias; set name and noreply email **locally** |
+| 6 | WSL terminal | Cloned to `~/zendev_wsl/happy-bookshelf` (since moved to `~/projects/happy-bookshelf`) via the alias; set name and noreply email **locally** |
 | 7–8 | WSL terminal | Added README, architecture doc, `AGENTS.md`, `CLAUDE.md`, `.gitattributes`, `.gitignore` |
 | 9 | WSL terminal | Added this log, requirements, ADRs |
 

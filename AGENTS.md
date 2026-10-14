@@ -47,7 +47,7 @@ These rules come from the project owner and apply to every session.
 ## Local environment
 
 - Development machine: Windows on Arm, working inside **WSL**.
-- Code lives in the WSL filesystem (`~/zendev_wsl/happy-bookshelf`), **never** under `/mnt/c`.
+- Code lives in the WSL filesystem (`~/projects/happy-bookshelf`), **never** under `/mnt/c`.
 - The Git remote uses the SSH alias `github-happy-bookshelf` (key `~/.ssh/happy-bookshelf`, GitHub account `findingzen`). Do not change the remote to plain `github.com`.
 - Git identity is set **locally** in this repo. Do not create or edit a global `~/.gitconfig`; other projects on this machine use different GitHub accounts.
 - Avoid collisions with other local projects: compose project name `happy-bookshelf`, non-default host ports, Postgres not published to the host.
