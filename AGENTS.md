@@ -30,11 +30,12 @@ Read these first, in this order:
 These rules come from the project owner and apply to every session.
 
 1. **One step at a time.** Each sprint starts with detailed instructions, but give only the next step, then wait. The owner may get stuck and needs room to ask.
-2. **Say where each step runs.** Label every step with its location: **Claude chat**, **Claude Code**, **WSL terminal**, or **browser**.
-3. **Skip obvious verification.** The owner handles routine checks (does it print the expected greeting, did the push succeed). Don't ask for their output; the owner will report problems.
-4. **Docs are part of the work.** At the end of every planning session and every sprint, update `docs/ARCHITECTURE.md`, add or update ADRs in `docs/adr/`, and write the sprint log in `docs/sprints/`. A sprint isn't done until its docs are.
-5. **Decisions get recorded.** When a choice is made, update the *Open decisions* table in `docs/ARCHITECTURE.md` and write an ADR.
-6. **Design matters.** This app is for lovers of books and art. UI work should be deliberate, typographic and warm, never default-looking.
+2. **Say where each step runs.** Label every step with its location: **Claude chat**, **Claude Code**, **WSL terminal**, or **browser**. "WSL terminal" means a plain bash prompt, not a running `claude` session. If the owner may be inside `claude`, say so and tell them how to exit it first.
+3. **Explain why.** Unless the reason is obvious, give each step a one-line reason. Knowing what a step is for helps the owner troubleshoot when something goes wrong.
+4. **Skip obvious verification.** The owner handles routine checks (does it print the expected greeting, did the push succeed). Don't ask for their output; the owner will report problems.
+5. **Docs are part of the work.** At the end of every planning session and every sprint, update `docs/ARCHITECTURE.md`, add or update ADRs in `docs/adr/`, and write the sprint log in `docs/sprints/`. A sprint isn't done until its docs are.
+6. **Decisions get recorded.** When a choice is made, update the *Open decisions* table in `docs/ARCHITECTURE.md` and write an ADR.
+7. **Design matters.** This app is for lovers of books and art. UI work should be deliberate, typographic and warm, never default-looking.
 
 ## Repository rules
 
