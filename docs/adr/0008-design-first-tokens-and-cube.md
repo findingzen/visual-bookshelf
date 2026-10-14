@@ -11,7 +11,7 @@ Alternatives considered: utility-first (Tailwind), component frameworks (Bootstr
 ## Decision
 
 - The design direction gets its own sprint (**Sprint 4**) before the shelf prototype: palette, typefaces, type and space scales, and a static styleguide page.
-- CSS is hand-written and organised as **CUBE CSS**: design tokens as custom properties, a few layout compositions, small component blocks, and exceptions.
+- CSS is hand-written and organized as **CUBE CSS**: design tokens as custom properties, a few layout compositions, small component blocks, and exceptions.
 - Type follows an **editorial** approach: a modular scale, a comfortable measure and vertical rhythm, as in book design.
 - The Lit components take the same tokens through custom properties, which cross the shadow DOM boundary.
 

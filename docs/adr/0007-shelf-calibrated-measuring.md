@@ -15,7 +15,7 @@ The prototype covers **one IKEA Billy shelf** and however many books stand on it
 1. The owner tape-measures the shelf opening (inner width and height) once.
 2. The spines are pushed flush with the shelf's front edge, so they lie in the plane of the opening.
 3. Three photos are taken: from the left, the middle and the right.
-4. In each photo the four inner corners of the opening are marked. This gives a homography from pixels to millimetres in the plane of the opening.
+4. In each photo the four inner corners of the opening are marked. This gives a homography from pixels to millimeters in the plane of the opening.
 5. Spine boundaries are marked by hand on the rectified photo, giving each book's thickness and height.
 6. The result is corrected in two ways:
    - each book has three independent measurements; the median is used, and a book whose measurements disagree is flagged;
@@ -26,7 +26,7 @@ Rulers and fiducial markers are not used.
 ## Consequences
 
 - No hardware beyond a phone and a tape measure.
-- The method depends on flush spines. A spine recessed 50 mm reads about 3% narrow from 1.5 m and shifts sideways in off-centre photos. If flush spines prove impractical, two views are enough to solve for each book's recess; that is built only if needed.
+- The method depends on flush spines. A spine recessed 50 mm reads about 3% narrow from 1.5 m and shifts sideways in off-center photos. If flush spines prove impractical, two views are enough to solve for each book's recess; that is built only if needed.
 - Boundaries are marked by hand in the prototype. Automatic detection is later work and shares ground with spine recognition (Phase 3).
 - Book depth (cover width) cannot be measured from the front. The spine view does not need it.
 - The prototype shrinks from about 50 books to one shelf, which is enough to judge whether arranging spines is useful.

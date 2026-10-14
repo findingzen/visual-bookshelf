@@ -4,7 +4,7 @@
 
 ## Context
 
-ISBN scanning and cataloguing are well served by existing products. The project's distinctive idea is the virtual shelf: books as physical objects with real dimensions, arranged on real shelf space, with different organisations previewed before moving anything. Whether that is genuinely useful has not been tested. Physical dimension data is also sparse in public sources.
+ISBN scanning and cataloging are well served by existing products. The project's distinctive idea is the virtual shelf: books as physical objects with real dimensions, arranged on real shelf space, with different organizations previewed before moving anything. Whether that is genuinely useful has not been tested. Physical dimension data is also sparse in public sources.
 
 ## Decision
 

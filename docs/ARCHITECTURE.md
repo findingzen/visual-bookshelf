@@ -23,7 +23,7 @@ It is a proposal. What has been built and verified is stated in `docs/DESIGN.md`
 | 8 | Django, non-React frontend | Django + HTMX + Alpine.js for pages; Lit web components for the interactive shelf |
 | 9 | Physical-location model, virtual shelves | Bookcase → Shelf → linear "run"; arrangement strategies; SVG spines with real dimensions |
 | 10 | Documentation-first | `docs/` updated every session; ADRs for decisions; CHANGELOG |
-| 12 | Beautiful UI for book and art lovers | Typographic, warm design system built from open-licence fonts and a paper-and-ink palette |
+| 12 | Beautiful UI for book and art lovers | Typographic, warm design system built from open-license fonts and a paper-and-ink palette |
 
 **Non-goals for v1:** multi-tenant hosting, social features, lending/loan tracking (good v2 candidate), native mobile apps.
 
@@ -70,7 +70,7 @@ flowchart LR
 |---|---|---|---|
 | `caddy` | `caddy:2` | TLS termination, static + media files | Required: browsers only allow camera access over HTTPS (or `localhost`). Caddy's internal CA covers LAN use; Tailscale certs cover remote use |
 | `web` | `python:3.13-slim` | Django app, HTML + JSON API | Dependencies managed with `uv` |
-| `worker` | same image as `web` | Background jobs: metadata lookup, cover download, colour extraction | Django-Q2 using Postgres as its broker, so **no Redis container** |
+| `worker` | same image as `web` | Background jobs: metadata lookup, cover download, color extraction | Django-Q2 using Postgres as its broker, so **no Redis container** |
 | `db` | `postgres:16` | All persistent data | Named volume `visual-bookshelf_pgdata` |
 | `ml` | `python:3.13-slim` + OCR libs | Cover/spine recognition | Compose **profile** — off by default, so the base install stays light |
 
@@ -88,7 +88,7 @@ All base images are published for `linux/arm64`, which matters for the Windows-o
 4. A scan becomes a **ScanEvent** in IndexedDB first. The service worker syncs it to the server, so scanning works in a basement with no signal.
 5. The server returns a provisional match immediately from cache, or queues a lookup job.
 
-**Continuous-scan mode:** the camera stays open; each new ISBN gives a soft chime and a card slides into a tray. This is the fastest way to catalogue a whole shelf.
+**Continuous-scan mode:** the camera stays open; each new ISBN gives a soft chime and a card slides into a tray. This is the fastest way to catalog a whole shelf.
 
 ### 3.2 Scanning hardware
 
@@ -103,7 +103,7 @@ All base images are published for `linux/arm64`, which matters for the Windows-o
 Runs entirely locally in the `ml` container, so there is no per-request API cost:
 
 - **Spines:** detect text regions → OCR (Tesseract or PaddleOCR) → fuzzy-match title/author tokens against the local cache, then Open Library search. One photo of a whole shelf becomes many candidate books, each confirmed by the user.
-- **Covers:** compute an image embedding (open_clip) and a perceptual hash; nearest-neighbour search in `pgvector` against covers already cached. Good for books without barcodes (older, pre-1970).
+- **Covers:** compute an image embedding (open_clip) and a perceptual hash; nearest-neighbor search in `pgvector` against covers already cached. Good for books without barcodes (older, pre-1970).
 - **Optional:** a local vision model through Ollama for hard cases. Never required.
 
 🟡 **Open:** which OCR engine performs acceptably on arm64 CPU only. Benchmark in the Phase 3 spike.
@@ -122,7 +122,7 @@ Lookups go through a chain and stop at the first good result:
 
 Rules:
 
-- Raw responses are stored (`SourceRecord`) with source and timestamp, then normalised into our models. Re-normalising never needs a re-fetch.
+- Raw responses are stored (`SourceRecord`) with source and timestamp, then normalized into our models. Re-normalizing never needs a re-fetch.
 - **Covers:** request cover images by Open Library **cover ID**, not by ISBN. The ISBN-based covers endpoint is rate-limited per IP; the cover-ID path is not. Covers are downloaded once and stored in `media/`.
 - A polite `User-Agent` with the project URL and contact address is sent on every request.
 - Each field records where it came from, so the UI can show "page count from Google Books, edited by you".
@@ -134,7 +134,7 @@ Rules:
 ```
 User ──< Library ──< Copy >── Edition >── Work >──< Author
                        │         │
-                       │         └──< Cover (image, dominant colours, embedding)
+                       │         └──< Cover (image, dominant colors, embedding)
                        │
                        ├── Placement >── Shelf >── Bookcase >── Room
                        └──< Tag
@@ -157,7 +157,7 @@ The Commons is how new titles and corrections help everyone.
 
 - **What goes in:** bibliographic facts only — title, authors, ISBNs, dimensions, page count, cover image, spine photo.
 - **What never goes in:** ownership, location, notes, ratings, or anything that reveals what a person owns.
-- **Licence:** contributions are CC0, matching Open Library, so data can flow both ways.
+- **License:** contributions are CC0, matching Open Library, so data can flow both ways.
 - **Provenance and trust:** every contribution records who, when and from what evidence (for example, "measured with a ruler"). Several agreeing contributions raise confidence.
 - **Upstream first:** where Open Library is missing a record, offer to contribute it back to Open Library rather than only keeping it in our own Commons.
 
@@ -189,12 +189,12 @@ Views render server-side through Django templates and HTMX, so they stay fast an
 ### 8.1 Physical model
 
 - **Bookcase** has shelves; each **Shelf** has usable `width_mm`, `height_mm`, `depth_mm`.
-- All shelves join end to end into one **linear run** (total millimetres of shelf space). This is the abstraction the arrangement engine works on; it does not need to know the room's real layout.
+- All shelves join end to end into one **linear run** (total millimeters of shelf space). This is the abstraction the arrangement engine works on; it does not need to know the room's real layout.
 - A **Placement** puts a copy at an offset (mm) on a shelf. Placements can be *actual* (where it is now) or belong to a hypothetical **Arrangement**.
 
 ### 8.2 Arrangement engine
 
-1. Choose an ordering strategy: author, title, colour (spectrum), height, publication date, genre/subject, LCC or Dewey call number, or a custom view's sort.
+1. Choose an ordering strategy: author, title, color (spectrum), height, publication date, genre/subject, LCC or Dewey call number, or a custom view's sort.
 2. Lay books along the linear run in that order (first-fit), respecting each shelf's height. Books too tall for a shelf are flagged or moved to the next shelf that fits.
 3. Report the result: shelf fill percentage, overflow, wasted space, number of books that would move compared with the current arrangement.
 
@@ -202,8 +202,8 @@ Strategies are plain Python classes in `catalog/arrangements/`, so contributors 
 
 ### 8.3 Rendering
 
-- `<shelf-wall>` is a **Lit** web component that draws shelves and spines as SVG, scaled from real millimetres. Drag-and-drop moves a spine and posts the new placement through the JSON API.
-- **Spines, version 1:** a standard spine — width from thickness, height from height, colour from the cover's dominant colour, title and author set vertically in the display serif.
+- `<shelf-wall>` is a **Lit** web component that draws shelves and spines as SVG, scaled from real millimeters. Drag-and-drop moves a spine and posts the new placement through the JSON API.
+- **Spines, version 1:** a standard spine — width from thickness, height from height, color from the cover's dominant color, title and author set vertically in the display serif.
 - **Spines, later:** a real spine photo (from the scan station) replaces the generated one when available.
 - 🟡 **Open:** SVG is fine up to a few thousand books on screen. If performance suffers, switch the renderer to Canvas (PixiJS) behind the same component interface.
 
@@ -218,7 +218,7 @@ Strategies are plain Python classes in `catalog/arrangements/`, so contributors 
 | Page interactions | HTMX |
 | Small client state (menus, toggles) | Alpine.js |
 | Shelf wall, scanner | Lit web components |
-| Styling | Plain CSS with custom properties (design tokens), organised as CUBE CSS, with an editorial type scale; no utility framework ([ADR 0008](adr/0008-design-first-tokens-and-cube.md)) |
+| Styling | Plain CSS with custom properties (design tokens), organized as CUBE CSS, with an editorial type scale; no utility framework ([ADR 0008](adr/0008-design-first-tokens-and-cube.md)) |
 | Build | None for most pages; `esbuild` only for the web components |
 | PWA | Web app manifest + Workbox service worker |
 
@@ -226,9 +226,9 @@ Strategies are plain Python classes in `catalog/arrangements/`, so contributors 
 
 For people who love books and art:
 
-- **Type:** a literary serif for display and reading (for example *Fraunces* or *EB Garamond*) paired with a quiet sans for UI chrome. Open-licence fonts only, self-hosted.
-- **Palette:** paper, ink, cloth-binding colours; a "reading room at night" dark mode.
-- **Texture and motion:** subtle paper grain, gentle page-turn and slide transitions, honouring `prefers-reduced-motion`.
+- **Type:** a literary serif for display and reading (for example *Fraunces* or *EB Garamond*) paired with a quiet sans for UI chrome. Open-license fonts only, self-hosted.
+- **Palette:** paper, ink, cloth-binding colors; a "reading room at night" dark mode.
+- **Texture and motion:** subtle paper grain, gentle page-turn and slide transitions, honoring `prefers-reduced-motion`.
 - **Covers are the art:** generous whitespace, covers shown large, chrome kept quiet.
 
 The design direction is set in Sprint 4, before the shelf prototype, so the prototype and its showcase are built on the real palette and type. Sprint 4 produces a static styleguide page; it becomes `/styleguide` in the Django app in Sprint 8.
@@ -275,7 +275,7 @@ Detailed in Sprint 2. Principles:
 | Phase | Theme | Key deliverables |
 |---|---|---|
 | 0 | Foundations | Repo, SSH isolation, arm64 dev env, Claude Code setup, docs skeleton, design direction, shelf prototype |
-| 1 | Catalogue | Django skeleton, compose stack, ISBN scan, lookup chain, Copy CRUD, Gallery/Ledger views, PWA install |
+| 1 | Catalog | Django skeleton, compose stack, ISBN scan, lookup chain, Copy CRUD, Gallery/Ledger views, PWA install |
 | 2 | Shelves | Bookcase/shelf model, linear run, arrangement engine, `<shelf-wall>`, backups |
 | 3 | Recognition | Spine OCR, cover matching, scan station, Commons contributions |
 | 4 | Share | Public demo, contributor guide, first tagged release (see *Open-source readiness*) |
@@ -303,7 +303,7 @@ These run alongside the phases rather than waiting for Phase 4. Each one has an 
 | **Showcase:** a striking GIF or live demo page of the virtual shelf near the top of the README | Visitors understand the idea in five seconds | GIF from the Sprint 7 shelf prototype; live demo page in Phase 4 |
 | **Two-minute quick start** that actually works | `git clone` → `docker compose up` → working app, tested on a clean machine for every release | Phase 1 |
 | **Architecture docs and decision records** | `docs/ARCHITECTURE.md` updated every session; one ADR per decision in `docs/adr/` | Phase 0 (now) |
-| **Contributor on-ramp:** friendly `CONTRIBUTING.md`, issue templates, labelled `good first issue`s | At least five well-scoped first issues at any time | `CONTRIBUTING.md` in Phase 0; first issues in Phase 1 |
+| **Contributor on-ramp:** friendly `CONTRIBUTING.md`, issue templates, labeled `good first issue`s | At least five well-scoped first issues at any time | `CONTRIBUTING.md` in Phase 0; first issues in Phase 1 |
 | **Visibly thoughtful design:** design system, `/styleguide` page, screenshots in the README | The design is the project's calling card | Tokens and styleguide in Sprint 4; screenshots from Phase 1 |
 
 ### Measuring books (decided in Session 0, revised in Session 1)
@@ -313,11 +313,11 @@ The shelf opening is the scale reference; rulers and fiducial markers are not us
 1. The shelf opening's inner width and height are tape-measured once.
 2. Spines are pushed flush with the shelf's front edge, so they lie in the plane of the opening.
 3. Three photos are taken: from the left, the middle and the right.
-4. The four inner corners marked in each photo give a homography from pixels to millimetres, which removes perspective for any camera angle.
+4. The four inner corners marked in each photo give a homography from pixels to millimeters, which removes perspective for any camera angle.
 5. Spine boundaries marked on the rectified photo (by hand first, automatically later) give each book's thickness and height.
 6. Two corrections: the median of the three measurements is used and disagreement is flagged; and the thicknesses must add up to the tape-measured occupied run, with the residual spread in proportion to thickness.
 
-The prototype covers one IKEA Billy shelf. A spine that is not flush reads narrow and shifts sideways in off-centre photos; solving for each book's recess from two views is the fallback.
+The prototype covers one IKEA Billy shelf. A spine that is not flush reads narrow and shifts sideways in off-center photos; solving for each book's recess from two views is the fallback.
 
 ---
 
@@ -326,8 +326,8 @@ The prototype covers one IKEA Billy shelf. A spine that is not flush reads narro
 | ID | Question | Options | Leaning |
 |---|---|---|---|
 | D-1 | Project name | `happy-bookshelf` · `visual-bookshelf` | ✅ `visual-bookshelf`, renamed in Sprint 2 ([ADR 0010](adr/0010-rename-to-visual-bookshelf.md)) |
-| D-2 | Code licence | AGPL-3.0 (forks that host it must share changes) · MIT (maximum adoption) | ✅ MIT, chosen for visibility and low friction for contributors and adopters |
-| D-3 | Data licence for Commons | CC0 | CC0, to stay compatible with Open Library |
+| D-2 | Code license | AGPL-3.0 (forks that host it must share changes) · MIT (maximum adoption) | ✅ MIT, chosen for visibility and low friction for contributors and adopters |
+| D-3 | Data license for Commons | CC0 | CC0, to stay compatible with Open Library |
 | D-4 | Task queue | Django-Q2 (ORM) · Celery + Redis | Django-Q2: one fewer container |
 | D-5 | Shelf renderer | SVG · Canvas (PixiJS) | SVG first |
 | D-6 | OCR engine | Tesseract · PaddleOCR | Benchmark in Phase 3 |

@@ -1,4 +1,4 @@
-# 0003 — MIT licence for code
+# 0003 — MIT license for code
 
 **Status:** Accepted · **Date:** 2026-10-13
 
@@ -8,11 +8,11 @@ The two main candidates were AGPL-3.0, which requires anyone running a modified 
 
 ## Decision
 
-All code in this repository is released under the **MIT licence**.
+All code in this repository is released under the **MIT license**.
 
 ## Consequences
 
 - Lowest friction for users, contributors and companies; no corporate "no AGPL" policies to block adoption.
 - Anyone may build a closed or commercial product, including a hosted service, from this code without sharing changes. This was accepted knowingly.
-- All dependencies in the planned stack use permissive licences, so there are no compatibility conflicts.
-- Data and fonts are licensed separately (see ADR 0004; fonts keep their own licences).
+- All dependencies in the planned stack use permissive licenses, so there are no compatibility conflicts.
+- Data and fonts are licensed separately (see ADR 0004; fonts keep their own licenses).

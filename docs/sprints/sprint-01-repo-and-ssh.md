@@ -12,7 +12,7 @@
 |---|---|---|
 | 1 | WSL terminal | Inventoried `~/.ssh` and Git config. Found three existing GitHub host entries and no global `~/.gitconfig` in WSL |
 | 2 | WSL terminal | Generated a dedicated key: `~/.ssh/happy-bookshelf` (ed25519, passphrase-protected) |
-| 3 | Browser | Created public repo `findingzen/happy-bookshelf` with the MIT licence, no generated README |
+| 3 | Browser | Created public repo `findingzen/happy-bookshelf` with the MIT license, no generated README |
 | 4 | Browser | Added the public key to the `findingzen` account |
 | 5 | WSL terminal | Added SSH host alias `github-happy-bookshelf` with `IdentitiesOnly yes` (config backed up first) |
 | 6 | WSL terminal | Cloned to `~/zendev_wsl/happy-bookshelf` (since moved to `~/projects/happy-bookshelf`) via the alias; set name and noreply email **locally** |
@@ -29,7 +29,7 @@
 ## Decisions
 
 - Name: `happy-bookshelf`.
-- Licence: MIT — see [ADR 0003](../adr/0003-mit-licence.md).
+- License: MIT — see [ADR 0003](../adr/0003-mit-license.md).
 - Shelf prototype moved up to Sprint 4 — see [ADR 0005](../adr/0005-shelf-prototype-first.md).
 
 ## Lessons

@@ -5,7 +5,7 @@ Humans are welcome to read this too; contributor guidance for people lives in `C
 
 ## Project in one paragraph
 
-visual-bookshelf is an open-source, self-hosted home-library catalogue, delivered as a PWA. Books are identified by ISBN barcode (later by cover and spine), catalogued with metadata from free open sources, and placed on virtual shelves with real physical dimensions so different arrangements can be previewed. Read `docs/ARCHITECTURE.md` before making structural changes.
+visual-bookshelf is an open-source, self-hosted home-library catalog, delivered as a PWA. Books are identified by ISBN barcode (later by cover and spine), cataloged with metadata from free open sources, and placed on virtual shelves with real physical dimensions so different arrangements can be previewed. Read `docs/ARCHITECTURE.md` before making structural changes.
 
 ## Starting a session
 
@@ -21,7 +21,7 @@ Read these first, in this order:
 
 - Backend: Django, PostgreSQL, Django-Q2 (Postgres as broker, no Redis)
 - Frontend: Django templates + HTMX + Alpine.js; Lit web components only for the shelf wall and scanner. **No React.**
-- Styling: plain CSS with custom properties (design tokens), organised as CUBE CSS. No utility framework.
+- Styling: plain CSS with custom properties (design tokens), organized as CUBE CSS. No utility framework.
 - Runtime: a compose stack with Caddy for HTTPS. Development uses rootless Podman in WSL; `compose.yaml` must also run under Docker. All images must support `linux/arm64`.
 - Python dependencies: `uv`
 
@@ -38,11 +38,12 @@ These rules come from the project owner and apply to every session.
 
 ## Repository rules
 
+- **American English spelling** in docs, code comments, commit messages and UI text: color, license, catalog, organize, center, meter.
 - **Line endings are LF.** Enforced by `.gitattributes`. Never commit CRLF files; Docker containers break on CRLF shell scripts.
 - **Never commit secrets.** Configuration goes in `.env` (git-ignored); every variable is documented in `.env.example`.
 - **Never print, read aloud or commit private keys.**
 - **Commit messages** follow Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`.
-- **Licences:** code is MIT. Book data contributed to the shared catalogue (Commons) is CC0. Bundled fonts keep their own licences (usually OFL).
+- **Licenses:** code is MIT. Book data contributed to the shared catalog (Commons) is CC0. Bundled fonts keep their own licenses (usually OFL).
 
 ## Local environment
 
